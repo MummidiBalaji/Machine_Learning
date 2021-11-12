@@ -1,1 +1,1 @@
-# California House Price Predicton [https://home-price-predict-usa.herokuapp.com/] (https://home-price-predict-usa.herokuapp.com/)
+# [California House Price Prediction: Click Here](https://home-price-predict-usa.herokuapp.com/)
