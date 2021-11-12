@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>California House Price Prediction</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 38px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 25px 0 #892e9b; 
+      }
+      .banner {
+      position: relative;
+      height: 350px;
+      background-image: url("https://lh3.googleusercontent.com/-WNlR6-4-r4w/YY1GybdkzYI/AAAAAAAAAJM/jsBfqKhZSPEYo1vt78fhOshOmpezgbSbACNcBGAsYHQ/s16000/GAF%2BRadcliffe%2BSquare%2BDawn%2B-%2BElizabeth%2BNyikos.jpg");  
+      background-size: cover;
+      display: flex;
+      justify-content: center;  
+      align-items: center;
+      text-align: center;
+      }
+      
+        .banner:hover {
+             background: url(https://blogger.googleusercontent.com/img/a/AVvXsEilAr6sGuvjckqeiXk8rRDnTxwnKuy9YTe-J8-l78YNSrXWcgrOwTazlgQhHyCYw4_lIMmPPLDsVb7025AgtLPraX4YbL-Epkj_e5k-Kd6QckQ1SnWNHl5v_brWr4BjbQiimh4AvDDtXcE8HI_dpyAVCrjSP5okqe_6kJ5QdEMaqtIuSaD9DpKMJA=s16000) repeat-y;
+            border: 1px solid #3A789D;
+        }
+        
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.3); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      input[type="date"] {
+      padding: 4px 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      textarea {
+      width: calc(100% - 12px);
+      padding: 5px;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+      color: #892e9b;
+      }
+      .item input:hover, .item select:hover, .item textarea:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #892e9b;
+      color: #892e9b;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      }
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 1%;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      input[type=radio], input[type=checkbox]  {
+      display: none;
+      }
+      label.radio {
+      position: relative;
+      display: inline-block;
+      margin: 5px 20px 15px 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      label.radio:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      }
+      input[type=radio]:checked + label:before, label.radio:hover:before {
+      border: 2px solid #892e9b;
+      }
+      label.radio:after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 5px;
+      width: 8px;
+      height: 4px;
+      border: 3px solid #892e9b;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+      opacity: 0;
+      }
+      input[type=radio]:checked + label:after {
+      opacity: 1;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #b04cc4;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #b52ed1;
+      }
+      @media (min-width: 568px) {
+      .name-item, .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input, .city-item input {
+      width: calc(50% - 20px);
+      }
+      .city-item select {
+      width: calc(50% - 8px);
+      }
+      }
+      fieldset:hover {
+            background: #EDEDED repeat-y;
+            border: 1px solid #3A789D;
+        }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="testbox">
+      <form action="/predict" method="POST">
+        <div class="banner">
+          <h1>California House Price Prediction</h1>
+        </div>
+
+<fieldset>
+
+        <div class="item">
+          <p>Geographical Coordinates</p>
+          <div class="name-item">
+            <input  type="number" step="0.0001" name="Longitude" placeholder="Longitude (min: -124.35), (max:-114.31)"/>
+            <input  type="number" step="0.0001" name="Latitude" placeholder="Latitude (min: 32.54), (max: 41.95)"/>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <p>Median Age of Household</p>
+          <input type="number" step="0.0001" name="Median_Age_of_Household" placeholder="(Eg: 30)"/>
+         </div>
+
+
+
+	        <div class="item">
+          <p>Total Rooms &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Total Bedrooms</p>
+          <div class="name-item">
+            <input type="number" name="Total_Rooms" placeholder="(Eg: 100)"/>
+            <input type="number" name="Total_Bedrooms" placeholder="(Eg: 50)"/>
+          </div>
+        </div>
+
+
+
+	<div class="item">
+          <p>Population</p>
+          <input type="number" step="0.0001" name="Population" placeholder="(Eg: 5000)"/>
+        </div>
+
+
+	<div class="item">
+          <p>Households</p>
+          <input type="number" name="Households" placeholder="(Eg: 50000)"/>
+        </div>
+
+
+
+	
+	<div class="item">
+          <p>Median Income</p>
+          <input type="number" step="0.0001" name="Median_Income" placeholder="(Eg: 5)"/>
+        </div><br>
+
+<fieldset>
+    <legend><b>Ocean Proximity (In below fields either use 1 or 0)</b></legend>
+	<div class="item">
+	          <div class="name-item">
+          <p><1H Ocean &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;In Land</p>
+          <div class="name-item">
+            <input type="number" name="ONE_H_OCEAN" placeholder="0 (or) 1"/>
+            <input type="number" name="INLAND" placeholder="0 (or) 1"/>
+<p>Near Bay &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Near Ocean</p>
+
+	<input type="number" name="NEAR_BAY" placeholder="0 (or) 1"/>
+	<input type="number" name="NEAR_OCEAN" placeholder="0 (or) 1"/>
+
+          </div>
+        </div>
+    </fieldset>
+    <h4 style="color:#AA0021;"><b>Note: Only one field should be 1 remaining three fields should be 0</b></h4>	
+</fieldset>
+    
+        <div class="btn-block">
+          <button type="submit" href="/">Predict</button>
+        </div>
+        <br>
+	<div class="row">
+
+        {% if prediction %}
+       <center><h2 class='text.warning'><b>The Median cost of House is:</b><b style="color:rgb(199, 5, 70);"> {{prediction}}$</b></h2></center>
+        {% endif %}
+    
+    </div>
+    <br><br>
+
+    <fieldset>
+        <legend style="color:#052270;"><h2><b>Description of Fields</b></h2></legend>
+        <h3><b style="color:#022179;">1. Longitude:</b>&nbsp;&nbsp;A measure of how far west a house is; a higher value is farther west</h3>
+        <h3><b style="color:#022179;">2. Latitude:</b>&nbsp;&nbsp;A measure of how far north a house is; a higher value is farther north</h3>
+        <h3><b style="color:#022179;">3. Median Age of Households:</b>&nbsp;&nbsp;Median age of a house within a block; a lower number is a newer building</h3>
+        <h3><b style="color:#022179;">4. Total Rooms:</b>&nbsp;&nbsp;Total number of rooms within a block</h3>
+        <h3><b style="color:#022179;">5. Total Bedrooms:</b>&nbsp;&nbsp;Total number of bedrooms within a block</h3>
+        <h3><b style="color:#022179;">6. Population:</b>&nbsp;&nbsp;Total number of people residing within a block</h3>
+        <h3><b style="color:#022179;">7. Households:</b>&nbsp;&nbsp;Total number of households, a group of people residing within a home unit, for a block</h3>
+        <h3><b style="color:#022179;">8. Median Income:</b>&nbsp;&nbsp;Median income for households within a block of houses (measured in tens of thousands of US Dollars)</h3>
+        <h3><b style="color:#022179;">9. Ocean Proximity:</b>&nbsp;&nbsp;Location of the house w.r.t ocean/sea</h3>
+        <h3><b style="color:#022179;">10. Median Cost of House:</b>&nbsp;&nbsp;Median house value for households within a block (measured in US Dollars)</h3>
+
+    </fieldset>
+        <br>
+   
+      </form>
+    </div>
+    <center><h3>Author: Balaji Mummidi</h3></center>
+  </body>
+</html>
